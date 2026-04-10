@@ -17,17 +17,35 @@ Replace this paragraph with your own summary of what your version does.
 
 ## How The System Works
 
-Explain your design in plain language.
+Music recommenders like Spotify and YouTube use two main strategies: finding users with similar taste and borrowing their history (collaborative filtering) and matching songs by their audio attributes (content-based filtering). My version uses content-based filtering on a catalog of 18 songs. It scores each song by checking if the genre and mood match the user's preferences, then measures how close the song's energy, valence, acousticness, tempo, and danceability are to the user's target values. Songs are ranked by total score and the top results are returned as recommendations. This approach is transparent and explainable — every recommendation comes with a reason — but it won't surprise the user with anything outside their stated preferences.
 
-Some prompts to answer:
+**`Song` features used:** `genre`, `mood`, `energy`, `valence`, `acousticness`, `tempo_bpm`, `danceability`
 
-- What features does each `Song` use in your system
-  - For example: genre, mood, energy, tempo
-- What information does your `UserProfile` store
-- How does your `Recommender` compute a score for each song
-- How do you choose which songs to recommend
+**`UserProfile` stores:** `favorite_genre`, `favorite_mood`, `target_energy`, `target_valence`, `target_acousticness`, `target_tempo`, `target_danceability`
 
-You can include a simple diagram or bullet list if helpful.
+### Algorithm Recipe
+
+Each song is scored against the user profile using the following weighted rules. Songs are then sorted by total score (highest to lowest) and the top `k` are returned.
+
+| Signal | Points | Notes |
+|---|---|---|
+| Genre match | +2.5 | Hardest preference boundary |
+| Mood match | +2.0 | Reflects listener's current state |
+| Energy closeness | `2.0 × (1 - \|song.energy - target_energy\|)` | Boosted — energy strongly defines feel |
+| Valence closeness | `1.5 × (1 - \|song.valence - target_valence\|)` | Emotional positivity |
+| Acousticness closeness | `1.0 × (1 - \|song.acousticness - target_acousticness\|)` | Organic vs electronic texture |
+| Tempo closeness | `1.0 × (1 - \|song.tempo_bpm - target_tempo\| / 100)` | Normalized over a 100 BPM range |
+| Danceability closeness | `1.0 × (1 - \|song.danceability - target_danceability\|)` | Groove and rhythm feel |
+
+**Max possible score: 11.0**
+
+See [diagrams/music_recommender_flow.mmd](diagrams/music_recommender_flow.mmd) for the full data flow diagram.
+
+### Potential Biases
+
+- **Genre dominance:** With genre weighted at 2.5, songs outside the user's preferred genre start at a significant disadvantage — even if every other attribute is a perfect match.
+- **Single-point profiles:** Each user is represented as one fixed target per feature. A user who enjoys both high-energy and chill music depending on the moment cannot be accurately represented.
+- **Small catalog:** With only 18 songs, some genres and moods have only one or two representatives. This means the top results may repeat the same artists or styles regardless of the user's full profile.
 
 ---
 
