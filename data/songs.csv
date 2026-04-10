@@ -17,3 +17,10 @@ id,title,artist,genre,mood,energy,tempo_bpm,valence,danceability,acousticness
 16,Iron Curtain,Void March,metal,intense,0.96,168,0.30,0.72,0.05
 17,Golden Haze,The Drifters,folk,nostalgic,0.44,74,0.75,0.55,0.85
 18,After Hours,Silk Road,r&b,moody,0.62,96,0.58,0.70,0.38
+19,Burbujas de Amor,Juan Luis Guerra,lofi,chill,0.38,70,0.72,0.60,0.80
+20,Safaera,Bad Bunny,hip-hop,energetic,0.90,98,0.65,0.88,0.04
+21,Hasta la Raíz,Natalia Lafourcade,indie pop,happy,0.62,108,0.78,0.72,0.52
+22,En el Muelle de San Blás,Maná,rock,intense,0.78,130,0.42,0.68,0.15
+23,Inevitable,Shakira,pop,happy,0.85,120,0.82,0.84,0.12
+24,La Camisa Negra,Juanes,pop,happy,0.84,116,0.86,0.82,0.10
+25,Tattoo,Rauw Alejandro,r&b,romantic,0.72,94,0.74,0.82,0.18

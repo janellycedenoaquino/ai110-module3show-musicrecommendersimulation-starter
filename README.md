@@ -17,7 +17,7 @@ Replace this paragraph with your own summary of what your version does.
 
 ## How The System Works
 
-Music recommenders like Spotify and YouTube use two main strategies: finding users with similar taste and borrowing their history (collaborative filtering) and matching songs by their audio attributes (content-based filtering). My version uses content-based filtering on a catalog of 18 songs. It scores each song by checking if the genre and mood match the user's preferences, then measures how close the song's energy, valence, acousticness, tempo, and danceability are to the user's target values. Songs are ranked by total score and the top results are returned as recommendations. This approach is transparent and explainable — every recommendation comes with a reason — but it won't surprise the user with anything outside their stated preferences.
+Music recommenders like Spotify and YouTube use two main strategies: finding users with similar taste and borrowing their history (collaborative filtering) and matching songs by their audio attributes (content-based filtering). My version uses content-based filtering on a catalog of 25 songs. It scores each song by checking if the genre and mood match the user's preferences, then measures how close the song's energy, valence, acousticness, tempo, and danceability are to the user's target values. Songs are ranked by total score and the top results are returned as recommendations. This approach is transparent and explainable — every recommendation comes with a reason — but it won't surprise the user with anything outside their stated preferences.
 
 **`Song` features used:** `genre`, `mood`, `energy`, `valence`, `acousticness`, `tempo_bpm`, `danceability`
 
@@ -71,6 +71,10 @@ pip install -r requirements.txt
 ```bash
 python -m src.main
 ```
+
+### Sample Output
+
+![Top 5 Recommendations](<Top 5 recommendations.png>)
 
 ### Running Tests
 

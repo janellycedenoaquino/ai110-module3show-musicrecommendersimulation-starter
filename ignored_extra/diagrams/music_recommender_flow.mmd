@@ -1,0 +1,15 @@
+flowchart TD
+    A[User Profile\nfavorite_genre · favorite_mood\ntarget_energy · target_valence · target_acousticness\ntarget_tempo · target_danceability] --> B[Load songs.csv\n18 songs]
+    B --> C{For each song}
+    C --> D1[+2.5 if genre matches]
+    C --> D2[+2.0 if mood matches]
+    C --> D3[2.0 × energy closeness]
+    C --> D4[1.5 × valence closeness]
+    C --> D5[1.0 × acousticness closeness]
+    C --> D6[1.0 × tempo closeness]
+    C --> D7[1.0 × danceability closeness]
+    D1 & D2 & D3 & D4 & D5 & D6 & D7 --> E[Total Score\nmax 11.0]
+    E --> F[Attach score + explanation]
+    F --> C
+    C --> G[Sort all songs by score descending]
+    G --> H[Return top K recommendations]
