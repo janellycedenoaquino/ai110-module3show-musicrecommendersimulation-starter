@@ -107,6 +107,11 @@ def load_songs(csv_path: str) -> List[Dict]:
                 "valence": float(row["valence"]),
                 "danceability": float(row["danceability"]),
                 "acousticness": float(row["acousticness"]),
+                "popularity": int(row["popularity"]),
+                "release_decade": int(row["release_decade"]),
+                "mood_tag": row["mood_tag"],
+                "instrumentalness": float(row["instrumentalness"]),
+                "liveness": float(row["liveness"]),
             })
     print(f"Loaded songs: {len(songs)}")
     return songs
@@ -143,6 +148,26 @@ def score_song(user_prefs: Dict, song: Dict) -> Tuple[float, str]:
     danceability_pts = 1.0 * (1 - abs(song["danceability"] - user_prefs["target_danceability"]))
     score += danceability_pts
     reasons.append(f"danceability closeness (+{danceability_pts:.2f})")
+
+    popularity_pts = max(0.0, 0.5 * (1 - abs(song["popularity"] / 100 - user_prefs["target_popularity"] / 100)))
+    score += popularity_pts
+    reasons.append(f"popularity closeness (+{popularity_pts:.2f})")
+
+    if song["release_decade"] == user_prefs["preferred_decade"]:
+        score += 1.0
+        reasons.append("decade match (+1.0)")
+
+    if song["mood_tag"] == user_prefs["preferred_mood_tag"]:
+        score += 1.0
+        reasons.append("mood tag match (+1.0)")
+
+    instrumentalness_pts = max(0.0, 0.5 * (1 - abs(song["instrumentalness"] - user_prefs["target_instrumentalness"])))
+    score += instrumentalness_pts
+    reasons.append(f"instrumentalness closeness (+{instrumentalness_pts:.2f})")
+
+    liveness_pts = max(0.0, 0.5 * (1 - abs(song["liveness"] - user_prefs["target_liveness"])))
+    score += liveness_pts
+    reasons.append(f"liveness closeness (+{liveness_pts:.2f})")
 
     return score, ", ".join(reasons)
 

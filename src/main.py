@@ -24,6 +24,11 @@ def main() -> None:
         "target_acousticness": 0.15,
         "target_tempo": 120.0,
         "target_danceability": 0.85,
+        "target_popularity": 80,
+        "preferred_decade": 2000,
+        "preferred_mood_tag": "uplifting",
+        "target_instrumentalness": 0.05,
+        "target_liveness": 0.15,
     }
 
     # Profile 2: Chill lofi listener — low energy, focused mood, slow tempo, highly acoustic
@@ -35,6 +40,11 @@ def main() -> None:
         "target_acousticness": 0.85,
         "target_tempo": 75.0,
         "target_danceability": 0.55,
+        "target_popularity": 50,
+        "preferred_decade": 2020,
+        "preferred_mood_tag": "dreamy",
+        "target_instrumentalness": 0.55,
+        "target_liveness": 0.07,
     }
 
     # Profile 3: Intense rock fan — raw energy, fast tempo, low acousticness, high danceability
@@ -46,20 +56,27 @@ def main() -> None:
         "target_acousticness": 0.10,
         "target_tempo": 150.0,
         "target_danceability": 0.70,
+        "target_popularity": 65,
+        "preferred_decade": 2010,
+        "preferred_mood_tag": "aggressive",
+        "target_instrumentalness": 0.10,
+        "target_liveness": 0.25,
     }
 
     # Profile 4: Adversarial — sad mood + high energy (e.g. "angry crier" or workout grief playlist)
-    # Conflict: sad/melancholic mood expects low valence & low energy,
-    # but targets push high energy and fast tempo — genre "r&b" adds a second tension
-    # against low danceability preference. The scorer must decide which signals win.
     conflicted = {
         "favorite_genre": "r&b",
         "favorite_mood": "sad",
-        "target_valence": 0.10,     # very low (sad/dark) — aligns with mood but not energy
-        "target_energy": 0.95,      # high energy — contradicts sad mood convention
-        "target_acousticness": 0.05, # metal-appropriate, but extreme
-        "target_tempo": 160.0,      # fast — contradicts sad mood (usually slow)
-        "target_danceability": 0.20, # low — contradicts the high energy/tempo
+        "target_valence": 0.10,
+        "target_energy": 0.95,
+        "target_acousticness": 0.05,
+        "target_tempo": 160.0,
+        "target_danceability": 0.20,
+        "target_popularity": 85,
+        "preferred_decade": 2020,
+        "preferred_mood_tag": "melancholic",
+        "target_instrumentalness": 0.05,
+        "target_liveness": 0.10,
     }
 
     profiles = [
@@ -77,7 +94,7 @@ def main() -> None:
         for i, (song, score, explanation) in enumerate(recommendations, start=1):
             print(f"\n#{i}  {song['title']} by {song['artist']}")
             print(f"    Genre: {song['genre']} | Mood: {song['mood']}")
-            print(f"    Score: {score:.2f} / 11.00")
+            print(f"    Score: {score:.2f} / 14.50")
             print(f"    Why: {explanation}")
         print("\n" + "=" * 50)
 

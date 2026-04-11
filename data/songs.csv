@@ -1,26 +1,26 @@
-id,title,artist,genre,mood,energy,tempo_bpm,valence,danceability,acousticness
-1,Sunrise City,Neon Echo,pop,happy,0.82,118,0.84,0.79,0.18
-2,Midnight Coding,LoRoom,lofi,chill,0.42,78,0.56,0.62,0.71
-3,Storm Runner,Voltline,rock,intense,0.91,152,0.48,0.66,0.10
-4,Library Rain,Paper Lanterns,lofi,chill,0.35,72,0.60,0.58,0.86
-5,Gym Hero,Max Pulse,pop,intense,0.93,132,0.77,0.88,0.05
-6,Spacewalk Thoughts,Orbit Bloom,ambient,chill,0.28,60,0.65,0.41,0.92
-7,Coffee Shop Stories,Slow Stereo,jazz,relaxed,0.37,90,0.71,0.54,0.89
-8,Night Drive Loop,Neon Echo,synthwave,moody,0.75,110,0.49,0.73,0.22
-9,Focus Flow,LoRoom,lofi,focused,0.40,80,0.59,0.60,0.78
-10,Rooftop Lights,Indigo Parade,indie pop,happy,0.76,124,0.81,0.82,0.35
-11,Block Party,Krave,hip-hop,energetic,0.87,95,0.72,0.91,0.08
-12,Rainy Window,Clara Voss,folk,sad,0.30,68,0.38,0.44,0.93
-13,Voltage Drop,Circuit Ghost,electronic,energetic,0.95,140,0.65,0.94,0.03
-14,Velvet Slow,Mara Osei,r&b,romantic,0.55,88,0.78,0.67,0.42
-15,Cathedral Echo,Lumen Strings,classical,relaxed,0.22,58,0.70,0.31,0.97
-16,Iron Curtain,Void March,metal,intense,0.96,168,0.30,0.72,0.05
-17,Golden Haze,The Drifters,folk,nostalgic,0.44,74,0.75,0.55,0.85
-18,After Hours,Silk Road,r&b,moody,0.62,96,0.58,0.70,0.38
-19,Burbujas de Amor,Juan Luis Guerra,lofi,chill,0.38,70,0.72,0.60,0.80
-20,Safaera,Bad Bunny,hip-hop,energetic,0.90,98,0.65,0.88,0.04
-21,Hasta la Raíz,Natalia Lafourcade,indie pop,happy,0.62,108,0.78,0.72,0.52
-22,En el Muelle de San Blás,Maná,rock,intense,0.78,130,0.42,0.68,0.15
-23,Inevitable,Shakira,pop,happy,0.85,120,0.82,0.84,0.12
-24,La Camisa Negra,Juanes,pop,happy,0.84,116,0.86,0.82,0.10
-25,Tattoo,Rauw Alejandro,r&b,romantic,0.72,94,0.74,0.82,0.18
+id,title,artist,genre,mood,energy,tempo_bpm,valence,danceability,acousticness,popularity,release_decade,mood_tag,instrumentalness,liveness
+1,Sunrise City,Neon Echo,pop,happy,0.82,118,0.84,0.79,0.18,72,2020,uplifting,0.05,0.12
+2,Midnight Coding,LoRoom,lofi,chill,0.42,78,0.56,0.62,0.71,55,2020,dreamy,0.45,0.08
+3,Storm Runner,Voltline,rock,intense,0.91,152,0.48,0.66,0.10,68,2010,aggressive,0.10,0.20
+4,Library Rain,Paper Lanterns,lofi,chill,0.35,72,0.60,0.58,0.86,48,2020,peaceful,0.60,0.05
+5,Gym Hero,Max Pulse,pop,intense,0.93,132,0.77,0.88,0.05,80,2020,euphoric,0.03,0.15
+6,Spacewalk Thoughts,Orbit Bloom,ambient,chill,0.28,60,0.65,0.41,0.92,38,2020,dreamy,0.85,0.06
+7,Coffee Shop Stories,Slow Stereo,jazz,relaxed,0.37,90,0.71,0.54,0.89,44,2010,peaceful,0.30,0.35
+8,Night Drive Loop,Neon Echo,synthwave,moody,0.75,110,0.49,0.73,0.22,62,2020,melancholic,0.20,0.10
+9,Focus Flow,LoRoom,lofi,focused,0.40,80,0.59,0.60,0.78,50,2020,focused,0.55,0.07
+10,Rooftop Lights,Indigo Parade,indie pop,happy,0.76,124,0.81,0.82,0.35,65,2010,uplifting,0.08,0.18
+11,Block Party,Krave,hip-hop,energetic,0.87,95,0.72,0.91,0.08,75,2020,euphoric,0.04,0.22
+12,Rainy Window,Clara Voss,folk,sad,0.30,68,0.38,0.44,0.93,42,2010,melancholic,0.15,0.28
+13,Voltage Drop,Circuit Ghost,electronic,energetic,0.95,140,0.65,0.94,0.03,70,2020,euphoric,0.12,0.10
+14,Velvet Slow,Mara Osei,r&b,romantic,0.55,88,0.78,0.67,0.42,60,2020,romantic,0.10,0.14
+15,Cathedral Echo,Lumen Strings,classical,relaxed,0.22,58,0.70,0.31,0.97,35,2010,peaceful,0.95,0.40
+16,Iron Curtain,Void March,metal,intense,0.96,168,0.30,0.72,0.05,58,2010,aggressive,0.08,0.30
+17,Golden Haze,The Drifters,folk,nostalgic,0.44,74,0.75,0.55,0.85,40,2000,nostalgic,0.20,0.25
+18,After Hours,Silk Road,r&b,moody,0.62,96,0.58,0.70,0.38,63,2020,melancholic,0.08,0.12
+19,Burbujas de Amor,Juan Luis Guerra,lofi,chill,0.38,70,0.72,0.60,0.80,55,1990,romantic,0.15,0.20
+20,Safaera,Bad Bunny,hip-hop,energetic,0.90,98,0.65,0.88,0.04,90,2020,euphoric,0.05,0.18
+21,Hasta la Raíz,Natalia Lafourcade,indie pop,happy,0.62,108,0.78,0.72,0.52,72,2010,nostalgic,0.10,0.22
+22,En el Muelle de San Blás,Maná,rock,intense,0.78,130,0.42,0.68,0.15,78,1990,melancholic,0.05,0.25
+23,Inevitable,Shakira,pop,happy,0.85,120,0.82,0.84,0.12,82,2000,uplifting,0.04,0.15
+24,La Camisa Negra,Juanes,pop,happy,0.84,116,0.86,0.82,0.10,85,2000,euphoric,0.03,0.18
+25,Tattoo,Rauw Alejandro,r&b,romantic,0.72,94,0.74,0.82,0.18,88,2020,romantic,0.06,0.14
