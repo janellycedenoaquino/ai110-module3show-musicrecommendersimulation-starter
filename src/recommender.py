@@ -124,7 +124,7 @@ def score_song(user_prefs: Dict, song: Dict) -> Tuple[float, str]:
         score += 2.0
         reasons.append("mood match (+2.0)")
 
-    energy_pts = 2.0 * (1 - abs(song["energy"] - user_prefs["target_energy"]))
+    energy_pts = max(0.0, 2.0 * (1 - abs(song["energy"] - user_prefs["target_energy"])))
     score += energy_pts
     reasons.append(f"energy closeness (+{energy_pts:.2f})")
 
@@ -136,7 +136,7 @@ def score_song(user_prefs: Dict, song: Dict) -> Tuple[float, str]:
     score += acousticness_pts
     reasons.append(f"acousticness closeness (+{acousticness_pts:.2f})")
 
-    tempo_pts = 1.0 * (1 - abs(song["tempo_bpm"] - user_prefs["target_tempo"]) / 100)
+    tempo_pts = max(0.0, 1.0 * (1 - abs(song["tempo_bpm"] - user_prefs["target_tempo"]) / 100))
     score += tempo_pts
     reasons.append(f"tempo closeness (+{tempo_pts:.2f})")
 

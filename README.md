@@ -74,7 +74,11 @@ python -m src.main
 
 ### Sample Output
 
+**High-Energy Pop Fan**
 ![Top 5 Recommendations](<Top 5 recommendations.png>)
+
+**Updated Profile Run**
+![Top 5 Recommendations 2](<Top 5 recommendations list.png>)
 
 ### Running Tests
 
@@ -118,10 +122,9 @@ Read and complete `model_card.md`:
 
 [**Model Card**](model_card.md)
 
-Write 1 to 2 paragraphs here about what you learned:
+Building this recommender showed me that the "intelligence" of a recommendation comes entirely from design decisions made before writing any code — which features to include, how much weight to give each one. AI tools helped most during that design phase: I ran multiple chat sessions, got different suggestions for the scoring weights, and built a hybrid recipe from the best ideas across them. The key lesson was to always double-check AI suggestions against the current state of the code, since some were based on an older experimental version and no longer applied.
 
-- about how recommenders turn data into predictions
-- about where bias or unfairness could show up in systems like this
+Testing with diverse profiles revealed where bias quietly enters. The adversarial profile showed that a missing mood in the catalog makes that signal completely useless — the system looks like it's working but silently ignores part of the user's preference. That taught me that fairness in recommender systems is not just about the algorithm — it is equally about what data gets collected and whose tastes are represented.
 
 
 ---
