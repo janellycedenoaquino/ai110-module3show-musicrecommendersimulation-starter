@@ -9,6 +9,7 @@ You will implement the functions in recommender.py:
 - recommend_songs
 """
 
+from tabulate import tabulate
 from src.recommender import load_songs, recommend_songs
 
 
@@ -88,15 +89,27 @@ def main() -> None:
 
     for profile_name, user_prefs in profiles:
         recommendations = recommend_songs(user_prefs, songs, k=5)
-        print("\n" + "=" * 50)
+        print("\n" + "=" * 70)
         print(f"  Profile: {profile_name}  [mode: default]")
-        print("=" * 50)
+        print("=" * 70)
+        rows = []
         for i, (song, score, explanation) in enumerate(recommendations, start=1):
-            print(f"\n#{i}  {song['title']} by {song['artist']}")
-            print(f"    Genre: {song['genre']} | Mood: {song['mood']}")
-            print(f"    Score: {score:.2f} / 14.50")
-            print(f"    Why: {explanation}")
-        print("\n" + "=" * 50)
+            rows.append([
+                f"#{i}",
+                song["title"],
+                song["artist"],
+                song["genre"],
+                song["mood"],
+                f"{score:.2f} / 14.50",
+                explanation,
+            ])
+        print(tabulate(
+            rows,
+            headers=["#", "Title", "Artist", "Genre", "Mood", "Score", "Why"],
+            tablefmt="rounded_outline",
+            maxcolwidths=[None, 22, 18, 12, 10, 12, 55],
+        ))
+        print()
 
     # Mode comparison: run the pop fan through all 3 non-default modes
     print("\n\n" + "#" * 50)
