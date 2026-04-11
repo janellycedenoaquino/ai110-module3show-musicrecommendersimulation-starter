@@ -89,7 +89,7 @@ def main() -> None:
     for profile_name, user_prefs in profiles:
         recommendations = recommend_songs(user_prefs, songs, k=5)
         print("\n" + "=" * 50)
-        print(f"  Profile: {profile_name}")
+        print(f"  Profile: {profile_name}  [mode: default]")
         print("=" * 50)
         for i, (song, score, explanation) in enumerate(recommendations, start=1):
             print(f"\n#{i}  {song['title']} by {song['artist']}")
@@ -97,6 +97,16 @@ def main() -> None:
             print(f"    Score: {score:.2f} / 14.50")
             print(f"    Why: {explanation}")
         print("\n" + "=" * 50)
+
+    # Mode comparison: run the pop fan through all 3 non-default modes
+    print("\n\n" + "#" * 50)
+    print("  MODE COMPARISON — High-Energy Pop Fan")
+    print("#" * 50)
+    for mode in ["genre-first", "mood-first", "energy-focused"]:
+        recommendations = recommend_songs(pop_fan, songs, k=3, mode=mode)
+        print(f"\n--- Mode: {mode} ---")
+        for i, (song, score, explanation) in enumerate(recommendations, start=1):
+            print(f"  #{i}  {song['title']} by {song['artist']}  ({score:.2f})")
 
 
 if __name__ == "__main__":

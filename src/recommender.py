@@ -116,20 +116,28 @@ def load_songs(csv_path: str) -> List[Dict]:
     print(f"Loaded songs: {len(songs)}")
     return songs
 
-def score_song(user_prefs: Dict, song: Dict) -> Tuple[float, str]:
+SCORING_MODES = {
+    "default":        {"genre": 2.5, "mood": 2.0, "energy": 2.0},
+    "genre-first":    {"genre": 4.0, "mood": 1.0, "energy": 2.0},
+    "mood-first":     {"genre": 1.0, "mood": 4.0, "energy": 2.0},
+    "energy-focused": {"genre": 0.5, "mood": 0.5, "energy": 4.0},
+}
+
+def score_song(user_prefs: Dict, song: Dict, mode: str = "default") -> Tuple[float, str]:
     """Scores a single song against user preferences and returns (score, explanation)."""
+    weights = SCORING_MODES.get(mode, SCORING_MODES["default"])
     score = 0.0
     reasons = []
 
     if song["genre"] == user_prefs["favorite_genre"]:
-        score += 2.5
-        reasons.append("genre match (+2.5)")
+        score += weights["genre"]
+        reasons.append(f"genre match (+{weights['genre']})")
 
     if song["mood"] == user_prefs["favorite_mood"]:
-        score += 2.0
-        reasons.append("mood match (+2.0)")
+        score += weights["mood"]
+        reasons.append(f"mood match (+{weights['mood']})")
 
-    energy_pts = max(0.0, 2.0 * (1 - abs(song["energy"] - user_prefs["target_energy"])))
+    energy_pts = max(0.0, weights["energy"] * (1 - abs(song["energy"] - user_prefs["target_energy"])))
     score += energy_pts
     reasons.append(f"energy closeness (+{energy_pts:.2f})")
 
@@ -172,10 +180,10 @@ def score_song(user_prefs: Dict, song: Dict) -> Tuple[float, str]:
     return score, ", ".join(reasons)
 
 
-def recommend_songs(user_prefs: Dict, songs: List[Dict], k: int = 5) -> List[Tuple[Dict, float, str]]:
+def recommend_songs(user_prefs: Dict, songs: List[Dict], k: int = 5, mode: str = "default") -> List[Tuple[Dict, float, str]]:
     """Scores all songs against user preferences and returns the top k as (song, score, explanation) tuples."""
     scored = [
-        (song, *score_song(user_prefs, song))
+        (song, *score_song(user_prefs, song, mode))
         for song in songs
     ]
     ranked = sorted(scored, key=lambda x: x[1], reverse=True)
