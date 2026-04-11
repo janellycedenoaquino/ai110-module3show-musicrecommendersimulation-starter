@@ -11,7 +11,7 @@ Your goal is to:
 - Evaluate what your system gets right and wrong
 - Reflect on how this mirrors real world AI recommenders
 
-Replace this paragraph with your own summary of what your version does.
+This version builds a content-based music recommender that scores a catalog of 25 songs against a user's taste profile and returns the top 5 matches with plain-language explanations. It supports four user profiles, four scoring modes (default, genre-first, mood-first, energy-focused), and a diversity filter that prevents the same artist or genre from dominating the results.
 
 ---
 
@@ -39,13 +39,13 @@ Each song is scored against the user profile using the following weighted rules.
 
 **Max possible score: 11.0**
 
-See [diagrams/music_recommender_flow.mmd](diagrams/music_recommender_flow.mmd) for the full data flow diagram.
+See [assets/diagrams/music_recommender_flow.mmd](assets/diagrams/music_recommender_flow.mmd) for the full data flow diagram.
 
 ### Potential Biases
 
 - **Genre dominance:** With genre weighted at 2.5, songs outside the user's preferred genre start at a significant disadvantage — even if every other attribute is a perfect match.
 - **Single-point profiles:** Each user is represented as one fixed target per feature. A user who enjoys both high-energy and chill music depending on the moment cannot be accurately represented.
-- **Small catalog:** With only 18 songs, some genres and moods have only one or two representatives. This means the top results may repeat the same artists or styles regardless of the user's full profile.
+- **Small catalog:** With only 25 songs, some genres and moods have only one or two representatives. This means the top results may repeat the same artists or styles regardless of the user's full profile.
 
 ---
 
@@ -75,10 +75,19 @@ python -m src.main
 ### Sample Output
 
 **High-Energy Pop Fan**
-![Top 5 Recommendations](<Top 5 recommendations.png>)
+![High-Energy Pop Fan](assets/images/High_Energy_Pop.png)
 
-**Updated Profile Run**
-![Top 5 Recommendations 2](<Top 5 recommendations list.png>)
+**Chill Lofi Listener**
+![Chill Lofi Listener](assets/images/Chill_Lofi.png)
+
+**Intense Rock Fan**
+![Intense Rock Fan](assets/images/Intense_Rock.png)
+
+**Adversarial: Sad + High Energy**
+![Adversarial Profile](assets/images/Adversarial_Sad_High_Energy.png)
+
+**Mode & Diversity Comparison**
+![Mode and Diversity Comparison](<assets/images/Mode_and_ Diversity_Comparison.png>)
 
 ### Running Tests
 
@@ -94,25 +103,23 @@ You can add more tests in `tests/test_recommender.py`.
 
 ## Experiments You Tried
 
-Use this section to document the experiments you ran. For example:
+**Experiment 1 — Mood check removed:** Temporarily commented out the mood match line in `score_song`. Rankings barely changed for any profile. This confirmed that the genre weight (2.5) dominates the ranking, and mood (2.0) is largely redundant when genre already separates the results.
 
-- What happened when you changed the weight on genre from 2.0 to 0.5
-- What happened when you added tempo or valence to the score
-- How did your system behave for different types of users
+**Experiment 2 — Scoring modes compared:** Ran the High-Energy Pop Fan through all four modes (default, genre-first, mood-first, energy-focused). In `energy-focused` mode, the genre bonus dropped to 0.5 and non-pop songs with high energy started appearing in the top 3 — more variety but less intuitive for a pop-specific user.
+
+**Experiment 3 — Diversity filter on vs. off:** With the diversity filter off, the Pop Fan's top 5 included the same artist twice. With it on, the duplicate was replaced by a different genre song with a slightly lower score. The list felt more like a real playlist.
 
 ---
 
 ## Limitations and Risks
 
-Summarize some limitations of your recommender.
+- **Genre dominates:** A genre match (+2.5) can outweigh near-perfect scores on every other attribute, making the system behave more like a genre filter than a true taste matcher.
+- **No "sad" mood in the catalog:** Users who prefer sad music receive zero mood points on every song — a silent failure the output doesn't flag.
+- **Small catalog:** 25 songs means some genres and moods have only one representative, so the top results often repeat the same artists.
+- **Single fixed profile:** Each user is one static dictionary. Someone who likes both high-energy and chill music depending on the moment cannot be represented.
+- **String genre matching:** Sub-genres like "metal" and "rock" are treated as completely different, even when a user would likely enjoy both.
 
-Examples:
-
-- It only works on a tiny catalog
-- It does not understand lyrics or language
-- It might over favor one genre or mood
-
-You will go deeper on this in your model card.
+See [model_card.md](model_card.md) for a deeper analysis.
 
 ---
 

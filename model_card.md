@@ -26,6 +26,8 @@
 - The max possible score is 11.0.
 - Songs are sorted from highest to lowest score. The top 5 are returned as recommendations.
 - Each result includes a plain-language reason explaining why it was picked.
+- Four scoring modes are available (default, genre-first, mood-first, energy-focused) so the user can switch ranking strategies in `main.py`.
+- An optional diversity filter improves fairness by preventing the same artist from appearing more than once and the same genre from appearing more than twice in the top results. Without this, dominant genres (like pop) crowd out underrepresented ones even when other songs score competitively — the filter gives those songs a fair chance to appear.
 
 ---
 
@@ -79,9 +81,9 @@
 
 **Ideas for Improvement:**
 
-1. Add a diversity penalty so the same artist cannot appear more than once or twice in the top 5.
-2. Support multiple ranking modes (e.g., "Genre-First" vs "Mood-First") so users can switch strategies.
-3. Expand the catalog to 100+ songs with balanced genre and mood coverage to reduce data bias.
+1. Expand the catalog to 100+ songs with balanced genre and mood coverage to reduce data bias.
+2. Support multi-dimensional user profiles (e.g., a user who likes both high-energy and chill music depending on context).
+3. Replace string genre matching with a genre similarity graph so sub-genres like "metal" and "rock" are treated as related rather than completely different.
 
 ---
 

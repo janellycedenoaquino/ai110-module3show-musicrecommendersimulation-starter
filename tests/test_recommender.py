@@ -80,6 +80,58 @@ def test_genre_matching_song_scores_higher_than_non_matching_song():
     assert pop_score > lofi_score
 
 
+def test_mood_match_increases_score():
+    user_prefs = user_to_dict(make_pop_user())
+    pop_song = song_to_dict(make_pop_song())
+    no_mood_song = {**pop_song, "mood": "sad"}
+    score_with_mood, _ = score_song(user_prefs, pop_song)
+    score_without_mood, _ = score_song(user_prefs, no_mood_song)
+    assert score_with_mood > score_without_mood
+
+
+def test_scoring_modes_produce_different_rankings():
+    from src.recommender import recommend_songs
+    # Both songs share identical non-energy attributes so only genre/mood/energy weights decide the winner.
+    # Pop Track: genre+mood match but very low energy (0.1) — wins in default (genre+mood outweigh energy gap)
+    # Energy Track: no genre/mood match but perfect energy (0.99) — wins in energy-focused (energy weight 4x)
+    shared = {"tempo_bpm": 120, "valence": 0.9, "danceability": 0.8, "acousticness": 0.2,
+              "popularity": 80, "release_decade": 2000, "mood_tag": "uplifting",
+              "instrumentalness": 0.05, "liveness": 0.15}
+    songs = [
+        {"id": 1, "title": "Pop Track", "artist": "A", "genre": "pop", "mood": "happy", "energy": 0.1, **shared},
+        {"id": 2, "title": "Energy Track", "artist": "B", "genre": "rock", "mood": "intense", "energy": 0.99, **shared},
+    ]
+    user_prefs = {**user_to_dict(make_pop_user()), "target_energy": 0.99}
+    default_top = recommend_songs(user_prefs, songs, k=1, mode="default")[0][0]["title"]
+    energy_top = recommend_songs(user_prefs, songs, k=1, mode="energy-focused")[0][0]["title"]
+    assert default_top == "Pop Track"
+    assert energy_top == "Energy Track"
+
+
+def test_diversity_filter_limits_same_genre_to_two():
+    from src.recommender import recommend_songs
+    songs = [
+        {"id": i, "title": f"Pop Song {i}", "artist": f"Artist {i}", "genre": "pop",
+         "mood": "happy", "energy": 0.8, "tempo_bpm": 120, "valence": 0.9,
+         "danceability": 0.8, "acousticness": 0.2, "popularity": 80,
+         "release_decade": 2000, "mood_tag": "uplifting",
+         "instrumentalness": 0.05, "liveness": 0.15}
+        for i in range(1, 5)
+    ] + [song_to_dict(make_lofi_song()) | {"id": 5, "title": "Lofi Track", "artist": "Artist L"}]
+    user_prefs = user_to_dict(make_pop_user())
+    results = recommend_songs(user_prefs, songs, k=4, diversity=True)
+    genres = [song["genre"] for song, _, _ in results]
+    assert genres.count("pop") <= 2
+
+
+def test_recommend_songs_returns_exactly_k_results():
+    from src.recommender import recommend_songs
+    songs = [song_to_dict(make_pop_song()) | {"id": i, "title": f"Song {i}", "artist": f"Artist {i}"}
+             for i in range(1, 7)]
+    user_prefs = user_to_dict(make_pop_user())
+    assert len(recommend_songs(user_prefs, songs, k=3)) == 3
+
+
 def test_diversity_filter_prevents_same_artist_appearing_twice_in_top_results():
     songs = [
         Song(id=i, title=f"Song {i}", artist="Same Artist", genre="pop", mood="happy",
