@@ -17,6 +17,11 @@ class Song:
     valence: float
     danceability: float
     acousticness: float
+    popularity: int = 50
+    release_decade: int = 2020
+    mood_tag: str = ""
+    instrumentalness: float = 0.1
+    liveness: float = 0.1
 
 @dataclass
 class UserProfile:
@@ -31,6 +36,11 @@ class UserProfile:
     target_acousticness: float
     target_tempo: float
     target_danceability: float
+    target_popularity: int = 50
+    preferred_decade: int = 2020
+    preferred_mood_tag: str = ""
+    target_instrumentalness: float = 0.1
+    target_liveness: float = 0.1
 
 class Recommender:
     """
@@ -50,6 +60,11 @@ class Recommender:
             "target_acousticness": user.target_acousticness,
             "target_tempo": user.target_tempo,
             "target_danceability": user.target_danceability,
+            "target_popularity": user.target_popularity,
+            "preferred_decade": user.preferred_decade,
+            "preferred_mood_tag": user.preferred_mood_tag,
+            "target_instrumentalness": user.target_instrumentalness,
+            "target_liveness": user.target_liveness,
         }
         scored = sorted(
             self.songs,
@@ -61,6 +76,11 @@ class Recommender:
                 "acousticness": song.acousticness,
                 "tempo_bpm": song.tempo_bpm,
                 "danceability": song.danceability,
+                "popularity": song.popularity,
+                "release_decade": song.release_decade,
+                "mood_tag": song.mood_tag,
+                "instrumentalness": song.instrumentalness,
+                "liveness": song.liveness,
             })[0],
             reverse=True,
         )
@@ -76,6 +96,11 @@ class Recommender:
             "target_acousticness": user.target_acousticness,
             "target_tempo": user.target_tempo,
             "target_danceability": user.target_danceability,
+            "target_popularity": user.target_popularity,
+            "preferred_decade": user.preferred_decade,
+            "preferred_mood_tag": user.preferred_mood_tag,
+            "target_instrumentalness": user.target_instrumentalness,
+            "target_liveness": user.target_liveness,
         }
         song_dict = {
             "genre": song.genre,
@@ -85,6 +110,11 @@ class Recommender:
             "acousticness": song.acousticness,
             "tempo_bpm": song.tempo_bpm,
             "danceability": song.danceability,
+            "popularity": song.popularity,
+            "release_decade": song.release_decade,
+            "mood_tag": song.mood_tag,
+            "instrumentalness": song.instrumentalness,
+            "liveness": song.liveness,
         }
         _, explanation = score_song(user_prefs, song_dict)
         return explanation
