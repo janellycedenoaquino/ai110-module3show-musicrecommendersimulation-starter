@@ -108,6 +108,16 @@ def main() -> None:
         for i, (song, score, explanation) in enumerate(recommendations, start=1):
             print(f"  #{i}  {song['title']} by {song['artist']}  ({score:.2f})")
 
+    # Diversity comparison: show pop fan with and without diversity filter
+    print("\n\n" + "#" * 50)
+    print("  DIVERSITY COMPARISON — High-Energy Pop Fan")
+    print("#" * 50)
+    for label, div_flag in [("Without Diversity", False), ("With Diversity", True)]:
+        recommendations = recommend_songs(pop_fan, songs, k=5, diversity=div_flag)
+        print(f"\n--- {label} ---")
+        for i, (song, score, explanation) in enumerate(recommendations, start=1):
+            print(f"  #{i}  {song['title']} by {song['artist']}  |  Genre: {song['genre']}  ({score:.2f})")
+
 
 if __name__ == "__main__":
     main()

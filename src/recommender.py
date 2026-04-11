@@ -180,11 +180,35 @@ def score_song(user_prefs: Dict, song: Dict, mode: str = "default") -> Tuple[flo
     return score, ", ".join(reasons)
 
 
-def recommend_songs(user_prefs: Dict, songs: List[Dict], k: int = 5, mode: str = "default") -> List[Tuple[Dict, float, str]]:
-    """Scores all songs against user preferences and returns the top k as (song, score, explanation) tuples."""
+def recommend_songs(user_prefs: Dict, songs: List[Dict], k: int = 5, mode: str = "default", diversity: bool = False) -> List[Tuple[Dict, float, str]]:
+    """Scores all songs against user preferences and returns the top k as (song, score, explanation) tuples.
+
+    If diversity=True, applies a post-processing filter: max 1 song per artist, max 2 songs per genre.
+    """
     scored = [
         (song, *score_song(user_prefs, song, mode))
         for song in songs
     ]
     ranked = sorted(scored, key=lambda x: x[1], reverse=True)
-    return ranked[:k]
+
+    if not diversity:
+        return ranked[:k]
+
+    selected = []
+    artist_counts: Dict[str, int] = {}
+    genre_counts: Dict[str, int] = {}
+
+    for song, score, explanation in ranked:
+        artist = song["artist"]
+        genre = song["genre"]
+        if artist_counts.get(artist, 0) >= 1:
+            continue
+        if genre_counts.get(genre, 0) >= 2:
+            continue
+        selected.append((song, score, explanation))
+        artist_counts[artist] = artist_counts.get(artist, 0) + 1
+        genre_counts[genre] = genre_counts.get(genre, 0) + 1
+        if len(selected) == k:
+            break
+
+    return selected
